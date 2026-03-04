@@ -5,13 +5,13 @@
       "src": "api/index.php",
       "use": "vercel-php@0.7.4",
       "config": {
-        "composerInstallFlags": "--no-dev --optimize-autoloader --no-scripts"
+        "composerInstallFlags": "--no-dev --optimize-autoloader"
       }
     }
   ],
   "routes": [
     {
-      "src": "/(css|js|images)/(.*)",
+      "src": "/(css|js|images|fonts)/(.*)",
       "dest": "public/$1/$2"
     },
     {
@@ -19,20 +19,32 @@
       "dest": "public/build/$1"
     },
     {
+      "src": "/storage/(.*)",
+      "dest": "public/storage/$1"
+    },
+    {
+      "src": "/(.*\\.(ico|png|jpg|jpeg|gif|svg|webp))",
+      "dest": "public/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "api/index.php"
     }
   ],
   "env": {
+    "APP_NAME": "Panti Wredha BDK",
     "APP_ENV": "production",
     "APP_DEBUG": "false",
+    "APP_URL": "@url",
     "APP_CONFIG_CACHE": "/tmp/config.php",
     "APP_ROUTES_CACHE": "/tmp/routes.php",
     "APP_EVENTS_CACHE": "/tmp/events.php",
-    "APP_VIEW_CACHED": "/tmp/view.php",
+    "VIEW_COMPILED_PATH": "/tmp/views",
     "CACHE_DRIVER": "array",
     "LOG_CHANNEL": "stderr",
     "SESSION_DRIVER": "cookie",
-    "VIEW_COMPILED_PATH": "/tmp/views"
+    "SESSION_LIFETIME": "120",
+    "QUEUE_CONNECTION": "sync",
+    "FILESYSTEM_DISK": "local"
   }
 }
