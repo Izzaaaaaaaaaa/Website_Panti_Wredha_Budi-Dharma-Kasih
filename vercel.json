@@ -31,17 +31,24 @@
   "env": {
     "APP_NAME": "Panti Wredha BDK",
     "APP_ENV": "production",
-    "APP_DEBUG": "false",
+    "APP_DEBUG": "true",
     "APP_URL": "@url",
+    "APP_KEY": "base64:4C70MgDZaIlGtt2hIadaCaky2IqJyp12c5tUtweiODY=",
     "APP_CONFIG_CACHE": "/tmp/config.php",
     "APP_ROUTES_CACHE": "/tmp/routes.php",
-    "APP_EVENTS_CACHE": "/tmp/events.php",
-    "VIEW_COMPILED_PATH": "/tmp/views",
     "CACHE_DRIVER": "array",
     "LOG_CHANNEL": "stderr",
     "SESSION_DRIVER": "cookie",
     "SESSION_LIFETIME": "120",
     "QUEUE_CONNECTION": "sync",
-    "FILESYSTEM_DISK": "local"
+    "FILESYSTEM_DISK": "local",
+    "VIEW_COMPILED_PATH": "/tmp/views",
+    "DB_CONNECTION": "pgsql",
+    "DB_HOST": "aws-1-ap-southeast-1.pooler.supabase.com",
+    "DB_PORT": "5432",
+    "DB_DATABASE": "postgres",
+    "DB_USERNAME": "postgres.omlrnxdqdfxfaypaarho",
+    "DB_PASSWORD": "pantiwredapbg",
+    "DB_SSLMODE": "require"
   }
 }
