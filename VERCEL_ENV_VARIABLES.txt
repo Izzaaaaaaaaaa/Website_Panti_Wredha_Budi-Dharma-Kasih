@@ -1,0 +1,117 @@
+========================================
+ENVIRONMENT VARIABLES UNTUK VERCEL
+========================================
+
+Copy-paste satu per satu ke Vercel Settings > Environment Variables
+
+Cara:
+1. Buka: https://vercel.com (login)
+2. Pilih project: website-panti-wredha-budi-dharma-kasih
+3. Klik tab "Settings" (di atas)
+4. Klik "Environment Variables" (di sidebar kiri)
+5. Klik tombol "Add New" untuk setiap variable di bawah
+
+========================================
+
+Name: APP_KEY
+Value: base64:4C70MgDZaIlGtt2hIadaCaky2IqJyp12c5tUtweiODY=
+
+---
+
+Name: DB_CONNECTION
+Value: pgsql
+
+---
+
+Name: DB_HOST
+Value: aws-1-ap-southeast-1.pooler.supabase.com
+
+---
+
+Name: DB_PORT
+Value: 5432
+
+---
+
+Name: DB_DATABASE
+Value: postgres
+
+---
+
+Name: DB_USERNAME
+Value: postgres.omlrnxdqdfxfaypaarho
+
+---
+
+Name: DB_PASSWORD
+Value: pantiwredapbg
+
+---
+
+Name: DB_SSLMODE
+Value: require
+
+---
+
+Name: MAIL_MAILER
+Value: smtp
+
+---
+
+Name: MAIL_HOST
+Value: smtp.gmail.com
+
+---
+
+Name: MAIL_PORT
+Value: 587
+
+---
+
+Name: MAIL_USERNAME
+Value: wredhabdk@gmail.com
+
+---
+
+Name: MAIL_PASSWORD
+Value: pantiwredhabdk1988
+
+---
+
+Name: MAIL_ENCRYPTION
+Value: tls
+
+---panti
+
+Name: MAIL_FROM_ADDRESS
+Value: pantiwredhabdk@gmail.com
+
+---
+
+Name: MAIL_FROM_NAME
+Value: Panti Wredha Budi Dharma Kasih
+
+========================================
+
+SETELAH SEMUA DITAMBAHKAN:
+1. Klik tab "Deployments"
+2. Pilih deployment terakhir
+3. Klik titik tiga (...)
+4. Klik "Redeploy"
+
+ATAU
+
+Push commit baru ke GitHub (Vercel akan auto redeploy)
+
+========================================
+
+UNTUK ADMIN DAN DONATUR:
+Setelah website jalan, aksesnya:
+
+Homepage/Donatur: https://website-panti-wredha-budi-dharma-ka-coral.vercel.app/
+Admin Login: https://website-panti-wredha-budi-dharma-ka-coral.vercel.app/admin/login
+Admin Dashboard: https://website-panti-wredha-budi-dharma-ka-coral.vercel.app/admin
+
+Semua dalam 1 website, tidak perlu deploy terpisah.
+
+========================================

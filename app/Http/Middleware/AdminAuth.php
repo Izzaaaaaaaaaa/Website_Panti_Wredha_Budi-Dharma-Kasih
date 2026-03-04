@@ -15,10 +15,25 @@ class AdminAuth
      */
     public function handle($request, Closure $next)
     {
-        if (!session()->has('admin_logged_in')) {
-            return redirect('/admin/login');
+        // Cek apakah user sudah login via Sanctum (API token)
+        if (auth('sanctum')->check()) {
+            $user = auth('sanctum')->user();
+            
+            // Cek apakah user adalah admin
+            if ($user && $user->isAdmin()) {
+                return $next($request);
+            }
         }
-        return $next($request);
+        
+        // Jika tidak ada auth, redirect ke login admin
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized. Please login as admin.'
+            ], 401);
+        }
+        
+        return redirect()->route('admin.login')->with('error', 'Silakan login terlebih dahulu');
     }
 
 }
