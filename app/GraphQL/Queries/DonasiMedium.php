@@ -12,8 +12,12 @@ class DonasiMedium
      */
     public function __invoke($_, array $args): \Illuminate\Database\Eloquent\Collection
     {
-        return Donasi::select('id', 'user_id', 'donatur', 'jenis', 'detail', 'jumlah', 'tanggal', 'status', 'status_verifikasi')
-            ->with(['user:id,nama,email,no_hp,role'])
+        return Donasi::select(
+                'id', 'user_id', 'donatur', 'jenis', 'detail',
+                'jumlah', 'tanggal', 'status',
+                'status_verifikasi', 'petugas'
+            )
+            ->with(['user:id,nama,email,no_hp'])
             ->limit(20)
             ->get();
     }

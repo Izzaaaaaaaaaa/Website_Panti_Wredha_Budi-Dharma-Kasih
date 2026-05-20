@@ -12,9 +12,13 @@ class DonasiComplex
      */
     public function __invoke($_, array $args): \Illuminate\Database\Eloquent\Collection
     {
-        return Donasi::select('id', 'user_id', 'donatur', 'jenis', 'detail', 'jumlah', 'tanggal', 'status', 'petugas', 'status_verifikasi', 'catatan')
+        return Donasi::select(
+                'id', 'user_id', 'donatur', 'jenis', 'detail',
+                'jumlah', 'tanggal', 'status', 'petugas',
+                'status_verifikasi', 'catatan'
+            )
             ->with([
-                'user:id,nama,email,no_hp,role',
+                'user:id,nama,email,no_hp',
                 'laporan:id,donasi_id,email_donatur,isi_laporan,status,sent_at',
             ])
             ->limit(20)

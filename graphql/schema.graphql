@@ -1,20 +1,34 @@
 "Skema GraphQL untuk penelitian perbandingan performa REST API vs GraphQL"
+"Topik: Analisis Komparatif REST API dan GraphQL pada Sistem Donasi Online Berbasis Laravel"
+"
+Catatan struktur database:
+- verifikasi admin  = kolom status_verifikasi + petugas di tabel donasi
+- metode pembayaran = kolom detail di tabel donasi (Transfer, Cash, dll)
+- Tidak ada tabel terpisah untuk keduanya
+"
 
 type Query {
-    "Skenario 1 - Simple: hanya data donasi tanpa relasi"
+    "Skenario 1 - Simple Query"
+    "Mengambil data donasi saja (1 tabel, tanpa relasi)"
     donasiSimple: [Donasi!]!
         @field(resolver: "App\\GraphQL\\Queries\\DonasiSimple")
 
-    "Skenario 2 - Medium: donasi + user (donatur)"
+    "Skenario 2 - Medium Query"
+    "Mengambil data donasi + data donatur/user (2 tabel, 1 relasi)"
     donasiMedium: [Donasi!]!
         @field(resolver: "App\\GraphQL\\Queries\\DonasiMedium")
 
-    "Skenario 3 - Complex: donasi + user + laporan_donasi"
+    "Skenario 3 - Complex Query"
+    "Mengambil data donasi + donatur/user + laporan donasi (3 tabel, 2 relasi)"
+    "Termasuk info verifikasi admin (status_verifikasi, petugas) dan metode pembayaran (detail)"
     donasiComplex: [Donasi!]!
         @field(resolver: "App\\GraphQL\\Queries\\DonasiComplex")
 }
 
-"Tabel donasi"
+"Tabel donasi - tabel utama penelitian"
+"Kolom detail     = metode pembayaran (Transfer BCA, Cash, dll)"
+"Kolom petugas    = admin yang memverifikasi"
+"Kolom status_verifikasi = hasil verifikasi admin (pending/approved/rejected)"
 type Donasi {
     id: ID!
     user_id: Int
@@ -30,23 +44,22 @@ type Donasi {
     created_at: String
     updated_at: String
 
-    "Relasi ke user (donatur yang terdaftar)"
+    "Relasi ke tabel users (donatur yang terdaftar)"
     user: User
 
-    "Relasi ke laporan donasi"
+    "Relasi ke tabel laporan_donasi"
     laporan: [LaporanDonasi!]!
 }
 
-"Tabel users (donatur dan admin)"
+"Tabel users - data donatur dan admin"
 type User {
     id: ID!
     nama: String!
     email: String!
     no_hp: String
-    role: String!
 }
 
-"Tabel laporan_donasi"
+"Tabel laporan_donasi - laporan penggunaan donasi"
 type LaporanDonasi {
     id: ID!
     donasi_id: Int!

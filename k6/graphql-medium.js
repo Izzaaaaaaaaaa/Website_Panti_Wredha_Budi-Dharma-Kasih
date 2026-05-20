@@ -1,6 +1,6 @@
 /**
  * k6 Load Test - GraphQL Skenario 2: Medium Query
- * Mengambil data donasi + user (donatur)
+ * Mengambil data donasi + data donatur/user (2 tabel, 1 relasi)
  * Setara dengan REST GET /api/research/medium
  *
  * Cara jalankan:
@@ -17,7 +17,7 @@ export const options = {
 
 const BASE_URL = 'http://localhost:8000';
 
-// Query GraphQL - field yang diambil SAMA dengan REST medium
+// Field yang diambil SAMA persis dengan REST medium
 const QUERY = JSON.stringify({
     query: `{
         donasiMedium {
@@ -29,12 +29,12 @@ const QUERY = JSON.stringify({
             tanggal
             status
             status_verifikasi
+            petugas
             user {
                 id
                 nama
                 email
                 no_hp
-                role
             }
         }
     }`,

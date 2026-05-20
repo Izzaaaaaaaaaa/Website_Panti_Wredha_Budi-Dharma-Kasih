@@ -1,6 +1,6 @@
 /**
  * k6 Load Test - GraphQL Skenario 1: Simple Query
- * Mengambil data donasi saja (tanpa relasi)
+ * Mengambil data donasi saja (1 tabel, tanpa relasi)
  * Setara dengan REST GET /api/research/simple
  *
  * Cara jalankan:
@@ -17,7 +17,7 @@ export const options = {
 
 const BASE_URL = 'http://localhost:8000';
 
-// Query GraphQL - field yang diambil SAMA dengan REST simple
+// Field yang diambil SAMA persis dengan REST simple
 const QUERY = JSON.stringify({
     query: `{
         donasiSimple {
@@ -29,6 +29,7 @@ const QUERY = JSON.stringify({
             tanggal
             status
             status_verifikasi
+            petugas
         }
     }`,
 });

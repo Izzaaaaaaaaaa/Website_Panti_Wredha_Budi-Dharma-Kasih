@@ -1,6 +1,7 @@
 /**
  * k6 Load Test - GraphQL Skenario 3: Complex Query
- * Mengambil data donasi + user + laporan_donasi
+ * Mengambil data donasi + donatur/user + laporan donasi (3 tabel, 2 relasi)
+ * Termasuk info verifikasi admin (status_verifikasi, petugas) dan metode pembayaran (detail)
  * Setara dengan REST GET /api/research/complex
  *
  * Cara jalankan:
@@ -17,7 +18,7 @@ export const options = {
 
 const BASE_URL = 'http://localhost:8000';
 
-// Query GraphQL - field yang diambil SAMA dengan REST complex
+// Field yang diambil SAMA persis dengan REST complex
 const QUERY = JSON.stringify({
     query: `{
         donasiComplex {
@@ -36,7 +37,6 @@ const QUERY = JSON.stringify({
                 nama
                 email
                 no_hp
-                role
             }
             laporan {
                 id

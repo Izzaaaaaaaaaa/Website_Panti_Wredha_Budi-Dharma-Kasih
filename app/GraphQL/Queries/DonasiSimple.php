@@ -12,7 +12,11 @@ class DonasiSimple
      */
     public function __invoke($_, array $args): \Illuminate\Database\Eloquent\Collection
     {
-        return Donasi::select('id', 'donatur', 'jenis', 'detail', 'jumlah', 'tanggal', 'status', 'status_verifikasi')
+        return Donasi::select(
+                'id', 'donatur', 'jenis', 'detail',
+                'jumlah', 'tanggal', 'status',
+                'status_verifikasi', 'petugas'
+            )
             ->limit(20)
             ->get();
     }
