@@ -1,0 +1,58 @@
+"Skema GraphQL untuk penelitian perbandingan performa REST API vs GraphQL"
+
+type Query {
+    "Skenario 1 - Simple: hanya data donasi tanpa relasi"
+    donasiSimple: [Donasi!]!
+        @field(resolver: "App\\GraphQL\\Queries\\DonasiSimple")
+
+    "Skenario 2 - Medium: donasi + user (donatur)"
+    donasiMedium: [Donasi!]!
+        @field(resolver: "App\\GraphQL\\Queries\\DonasiMedium")
+
+    "Skenario 3 - Complex: donasi + user + laporan_donasi"
+    donasiComplex: [Donasi!]!
+        @field(resolver: "App\\GraphQL\\Queries\\DonasiComplex")
+}
+
+"Tabel donasi"
+type Donasi {
+    id: ID!
+    user_id: Int
+    donatur: String!
+    jenis: String!
+    detail: String!
+    jumlah: String!
+    tanggal: String!
+    status: String!
+    petugas: String!
+    status_verifikasi: String!
+    catatan: String
+    created_at: String
+    updated_at: String
+
+    "Relasi ke user (donatur yang terdaftar)"
+    user: User
+
+    "Relasi ke laporan donasi"
+    laporan: [LaporanDonasi!]!
+}
+
+"Tabel users (donatur dan admin)"
+type User {
+    id: ID!
+    nama: String!
+    email: String!
+    no_hp: String
+    role: String!
+}
+
+"Tabel laporan_donasi"
+type LaporanDonasi {
+    id: ID!
+    donasi_id: Int!
+    email_donatur: String!
+    isi_laporan: String!
+    status: String!
+    sent_at: String
+    created_at: String
+}

@@ -172,3 +172,19 @@ Route::fallback(function () {
         'message' => 'Endpoint tidak ditemukan'
     ], 404);
 });
+
+/*
+|--------------------------------------------------------------------------
+| RESEARCH ROUTES - Load Testing REST API vs GraphQL
+|--------------------------------------------------------------------------
+*/
+Route::prefix('research')->group(function () {
+    // Skenario 1: Simple Query - hanya data donasi
+    Route::get('/simple', [\App\Http\Controllers\Api\ResearchController::class, 'simple']);
+
+    // Skenario 2: Medium Query - donasi + donatur (user)
+    Route::get('/medium', [\App\Http\Controllers\Api\ResearchController::class, 'medium']);
+
+    // Skenario 3: Complex Query - donasi + user + laporan_donasi
+    Route::get('/complex', [\App\Http\Controllers\Api\ResearchController::class, 'complex']);
+});
