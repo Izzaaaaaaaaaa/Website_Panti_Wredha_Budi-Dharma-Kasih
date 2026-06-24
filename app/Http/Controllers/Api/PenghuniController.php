@@ -67,13 +67,22 @@ class PenghuniController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama' => 'required|string|max:255',
+            'usia' => 'nullable|integer|min:60|max:110',
+        ], [
+            'nama.required' => 'Nama wajib diisi',
+            'usia.min' => 'Usia penghuni minimal 60 tahun.',
+            'usia.max' => 'Usia penghuni tidak valid (max 110 tahun).',
         ]);
 
         if ($validator->fails()) {
+            $errors = $validator->errors();
+            $message = $errors->has('usia') 
+                ? $errors->first('usia') 
+                : 'Nama wajib diisi';
             return response()->json([
                 'success' => false,
-                'message' => 'Nama wajib diisi',
-                'errors' => $validator->errors()
+                'message' => $message,
+                'errors' => $errors
             ], 422);
         }
 
@@ -138,6 +147,23 @@ class PenghuniController extends Controller
                 'success' => false,
                 'message' => 'Data penghuni tidak ditemukan'
             ], 404);
+        }
+
+        // Validasi usia
+        if ($request->has('usia') && $request->usia !== null && $request->usia !== '') {
+            $usia = (int) $request->usia;
+            if ($usia < 60) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Usia penghuni minimal 60 tahun.'
+                ], 422);
+            }
+            if ($usia > 110) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Usia penghuni tidak valid (max 110 tahun).'
+                ], 422);
+            }
         }
 
         $data = $request->all();

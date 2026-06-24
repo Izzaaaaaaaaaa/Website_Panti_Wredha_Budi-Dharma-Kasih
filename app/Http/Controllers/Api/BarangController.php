@@ -68,13 +68,21 @@ class BarangController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama' => 'required|string|max:255',
+            'brg_masuk' => 'nullable|integer|min:1|max:9999',
+            'sisa_stok' => 'nullable|integer|min:1|max:9999',
         ]);
 
         if ($validator->fails()) {
+            $errors = $validator->errors();
+            if ($errors->has('brg_masuk') || $errors->has('sisa_stok')) {
+                $message = 'Jumlah barang harus antara 1 sampai 9999';
+            } else {
+                $message = 'Nama barang wajib diisi';
+            }
             return response()->json([
                 'success' => false,
-                'message' => 'Nama barang wajib diisi',
-                'errors' => $validator->errors()
+                'message' => $message,
+                'errors' => $errors
             ], 422);
         }
 
@@ -130,6 +138,20 @@ class BarangController extends Controller
         }
 
         $data = $request->all();
+
+        // Validasi jumlah stok tidak boleh 0 atau lebih dari 9999
+        if (isset($data['brg_masuk'])) {
+            $brg = (int) $data['brg_masuk'];
+            if ($brg <= 0 || $brg > 9999) {
+                return response()->json(['success' => false, 'message' => 'Jumlah barang masuk harus antara 1 sampai 9999'], 422);
+            }
+        }
+        if (isset($data['sisa_stok'])) {
+            $sisa = (int) $data['sisa_stok'];
+            if ($sisa <= 0 || $sisa > 9999) {
+                return response()->json(['success' => false, 'message' => 'Sisa stok harus antara 1 sampai 9999'], 422);
+            }
+        }
         
         // Handle foto - simpan ke file jika base64
         if (isset($data['foto']) && FileUploadHelper::isBase64Image($data['foto'])) {
@@ -231,8 +253,7 @@ class BarangController extends Controller
 
         // Cek apakah stok menipis setelah pengambilan
         $barang->refresh();
-        $threshold = max($barang->brg_masuk * 0.2, 5);
-        if ($barang->sisa_stok <= $threshold && $barang->sisa_stok > 0) {
+        if ($barang->sisa_stok < 10 && $barang->sisa_stok > 0) {
             NotificationService::stokMenipis($barang);
         }
 

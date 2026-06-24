@@ -57,6 +57,27 @@ createApp({
                 return;
             }
 
+            // Validasi jumlah stok tidak boleh 0 atau lebih dari 9999
+            const stokVal = parseInt(this.form.stok);
+            if (!this.form.stok || isNaN(stokVal) || stokVal <= 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Jumlah Tidak Valid',
+                    text: 'Jumlah barang harus lebih dari 0!',
+                    confirmButtonColor: '#d33'
+                });
+                return;
+            }
+            if (stokVal > 9999) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Jumlah Tidak Valid',
+                    text: 'Jumlah barang tidak boleh melebihi 9999!',
+                    confirmButtonColor: '#d33'
+                });
+                return;
+            }
+
             const result = await Swal.fire({
                 title: 'Simpan Data Barang?', 
                 text: 'Pastikan data sudah benar',

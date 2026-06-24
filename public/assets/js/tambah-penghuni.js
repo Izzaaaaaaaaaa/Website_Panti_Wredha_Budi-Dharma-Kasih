@@ -83,6 +83,20 @@ createApp({
                 return;
             }
 
+            // Validasi usia maksimal 110 tahun
+            if (this.form.usia !== '' && this.form.usia !== null) {
+                const usia = parseInt(this.form.usia);
+                if (!isNaN(usia) && usia > 110) {
+                    Swal.fire({ 
+                        icon: 'error', 
+                        title: 'Usia Tidak Valid', 
+                        text: 'Usia penghuni melebihi batas maksimal (110 tahun)!', 
+                        confirmButtonColor: '#d33' 
+                    });
+                    return;
+                }
+            }
+
             const result = await Swal.fire({
                 title: 'Simpan Data Penghuni?',
                 text: 'Pastikan data sudah benar',

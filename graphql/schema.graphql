@@ -1,34 +1,26 @@
-"Skema GraphQL untuk penelitian perbandingan performa REST API vs GraphQL"
-"Topik: Analisis Komparatif REST API dan GraphQL pada Sistem Donasi Online Berbasis Laravel"
-"
-Catatan struktur database:
-- verifikasi admin  = kolom status_verifikasi + petugas di tabel donasi
-- metode pembayaran = kolom detail di tabel donasi (Transfer, Cash, dll)
-- Tidak ada tabel terpisah untuk keduanya
-"
+# Skema GraphQL untuk penelitian perbandingan performa REST API vs GraphQL
+# Topik: Analisis Komparatif REST API dan GraphQL pada Sistem Donasi Online Berbasis Laravel
+#
+# Catatan struktur database:
+# - verifikasi admin  = kolom status_verifikasi + petugas di tabel donasi
+# - metode pembayaran = kolom detail di tabel donasi (Transfer, Cash, dll)
+# - Tidak ada tabel terpisah untuk keduanya
 
 type Query {
-    "Skenario 1 - Simple Query"
-    "Mengambil data donasi saja (1 tabel, tanpa relasi)"
+    "Skenario 1 - Simple Query: Mengambil data donasi saja (1 tabel, tanpa relasi)"
     donasiSimple: [Donasi!]!
         @field(resolver: "App\\GraphQL\\Queries\\DonasiSimple")
 
-    "Skenario 2 - Medium Query"
-    "Mengambil data donasi + data donatur/user (2 tabel, 1 relasi)"
+    "Skenario 2 - Medium Query: Mengambil data donasi + data donatur/user (2 tabel, 1 relasi)"
     donasiMedium: [Donasi!]!
         @field(resolver: "App\\GraphQL\\Queries\\DonasiMedium")
 
-    "Skenario 3 - Complex Query"
-    "Mengambil data donasi + donatur/user + laporan donasi (3 tabel, 2 relasi)"
-    "Termasuk info verifikasi admin (status_verifikasi, petugas) dan metode pembayaran (detail)"
+    "Skenario 3 - Complex Query: Mengambil data donasi + donatur/user + laporan donasi (3 tabel, 2 relasi). Termasuk info verifikasi admin dan metode pembayaran."
     donasiComplex: [Donasi!]!
         @field(resolver: "App\\GraphQL\\Queries\\DonasiComplex")
 }
 
-"Tabel donasi - tabel utama penelitian"
-"Kolom detail     = metode pembayaran (Transfer BCA, Cash, dll)"
-"Kolom petugas    = admin yang memverifikasi"
-"Kolom status_verifikasi = hasil verifikasi admin (pending/approved/rejected)"
+"Tabel donasi - tabel utama penelitian. detail=metode pembayaran, petugas=admin verifikasi, status_verifikasi=pending/approved/rejected"
 type Donasi {
     id: ID!
     user_id: Int

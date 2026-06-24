@@ -195,8 +195,8 @@ class NotificationService
     {
         $notifications = [];
 
-        // Cek stok menipis (sisa stok <= 5)
-        $stokMenipis = Barang::where('sisa_stok', '<=', 5)
+        // Cek stok menipis (sisa stok < 10)
+        $stokMenipis = Barang::where('sisa_stok', '<', 10)
             ->where('sisa_stok', '>', 0)
             ->get();
 

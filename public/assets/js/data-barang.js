@@ -41,7 +41,7 @@ createApp({
             return this.filteredList.slice(start, start + this.itemsPerPage);
         },
         totalStok() { return this.barangList.length; },
-        stokMenipis() { return this.barangList.filter(i => i.sisa_stok < 5).length; },
+        stokMenipis() { return this.barangList.filter(i => i.sisa_stok < 10).length; },
         jumlahHampirExpired() {
             const today = new Date();
             return this.barangList.filter(item => {
@@ -69,6 +69,20 @@ createApp({
                 const data = await response.json();
                 if (data.success) {
                     this.barangList = data.data;
+
+                    // Notifikasi toast jika ada stok menipis (< 10)
+                    const menipis = data.data.filter(i => i.sisa_stok < 10 && i.sisa_stok > 0);
+                    if (menipis.length > 0) {
+                        const namaList = menipis.map(i => `${i.nama} (sisa ${i.sisa_stok})`).join(', ');
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Stok Mulai Menipis!',
+                            text: `${menipis.length} barang stoknya hampir habis: ${namaList}`,
+                            confirmButtonColor: '#1a5c7a',
+                            timer: 6000,
+                            timerProgressBar: true
+                        });
+                    }
                 }
             } catch (error) {
                 console.error('Error loading barang:', error);
@@ -88,7 +102,7 @@ createApp({
             this.startDate = ''; this.endDate = ''; this.searchQuery = ''; this.filterType = 'tgl_masuk';
         },
 
-        isStokMenipis(stok) { return stok < 5; },
+        isStokMenipis(stok) { return stok < 10; },
 
         openModal(item, mode) {
             this.tempFormData = { ...item };
@@ -100,6 +114,26 @@ createApp({
         closeModal() { this.isModalOpen = false; this.tempFormData = {}; this.editingId = null; },
 
         async processEdit() {
+            // Validasi jumlah stok tidak boleh 0 atau lebih dari 9999
+            const brgMasuk = parseInt(this.tempFormData.brg_masuk);
+            const sisaStok = parseInt(this.tempFormData.sisa_stok);
+            if (isNaN(brgMasuk) || brgMasuk <= 0) {
+                Swal.fire({ icon: 'error', title: 'Jumlah Tidak Valid', text: 'Jumlah barang masuk harus lebih dari 0!', confirmButtonColor: '#d33' });
+                return;
+            }
+            if (brgMasuk > 9999) {
+                Swal.fire({ icon: 'error', title: 'Jumlah Tidak Valid', text: 'Jumlah barang masuk tidak boleh melebihi 9999!', confirmButtonColor: '#d33' });
+                return;
+            }
+            if (isNaN(sisaStok) || sisaStok <= 0) {
+                Swal.fire({ icon: 'error', title: 'Jumlah Tidak Valid', text: 'Sisa stok harus lebih dari 0!', confirmButtonColor: '#d33' });
+                return;
+            }
+            if (sisaStok > 9999) {
+                Swal.fire({ icon: 'error', title: 'Jumlah Tidak Valid', text: 'Sisa stok tidak boleh melebihi 9999!', confirmButtonColor: '#d33' });
+                return;
+            }
+
             const result = await Swal.fire({
                 title: 'Simpan Perubahan?', icon: 'question', showCancelButton: true,
                 confirmButtonColor: '#1a5c7a', cancelButtonColor: '#d33'

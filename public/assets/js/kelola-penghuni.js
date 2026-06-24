@@ -154,6 +154,20 @@ createApp({
 
         async processEdit() {
             if (!this.editingId) return;
+
+            // Validasi usia maksimal 110 tahun
+            if (this.tempFormData.usia !== '' && this.tempFormData.usia !== null && this.tempFormData.usia !== undefined) {
+                const usia = parseInt(this.tempFormData.usia);
+                if (!isNaN(usia) && usia > 110) {
+                    Swal.fire({ 
+                        icon: 'error', 
+                        title: 'Usia Tidak Valid', 
+                        text: 'Usia penghuni melebihi batas maksimal (110 tahun)!', 
+                        confirmButtonColor: '#d33' 
+                    });
+                    return;
+                }
+            }
             
             try {
                 const token = localStorage.getItem('admin_token');
