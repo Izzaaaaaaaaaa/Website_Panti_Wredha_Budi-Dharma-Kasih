@@ -8,7 +8,7 @@
     {{-- PAGE HEADER --}}
     <section class="page-header py-5 text-center">
         <div class="container">
-            <h1 class="main-title">Formulir Donasi Barang</h1>
+            <h1 class="main-title">{{ $settings['donasi_barang_title'] ?? 'Formulir Donasi Barang' }}</h1>
         </div>
     </section>
 
@@ -142,12 +142,13 @@
                         <p class="mb-2">
                             Klik link Google Maps berikut untuk mengirim atau mengantar donasi Anda
                         </p>
-                        <a href="https://maps.google.com" target="_blank">
+                        <a href="https://share.google/s2MmzsEeRxtT1BgNj" target="_blank">
                             Lihat Lokasi di Google Maps
                         </a>
                         <p class="mt-3 mb-0">
-                            Panti Wredha Budi Dharma Kasih<br>
-                            Purbalingga, Jawa Tengah
+                            <a href="https://share.google/s2MmzsEeRxtT1BgNj" target="_blank" style="text-decoration: none; color: inherit;">
+                                {!! nl2br(e($settings['alamat'] ?? "Panti Wredha Budi Dharma Kasih\nPurbalingga, Jawa Tengah")) !!}
+                            </a>
                         </p>
                     </div>
 

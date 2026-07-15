@@ -42,7 +42,7 @@
                         <h1>Yayasan Panti Wredha</h1>
                         <h2>"Budi Dharma Kasih" Purbalingga</h2>
                     </div>
-                    <p class="subtitle">Merawat dengan Hati, Melayani dengan Kasih</p>
+                    <p class="subtitle">{{ $settings['motto'] ?? 'Merawat dengan Hati, Melayani dengan Kasih' }}</p>
                 </div>
             </section>
 
@@ -50,14 +50,7 @@
             <section class="about pb-5">
                 <div class="container">
                     <div class="info-box glass-effect">
-                        <p class="about-quote">
-                            "Kasih Kristus Untuk Semua" menjadi semangat kami dalam melayani dan mendampingi para lanjut usia menjalani hari
-                            tua yang penuh makna, kedamaian, dan kebahagiaan. Panti Wredha Budi Dharma Kasih Purbalingga hadir sebagai rumah
-                            kedua bagi para lansia—tempat di mana mereka diterima, dihargai, dan dilayani dengan penuh cinta kasih. Kami
-                            percaya bahwa masa tua bukanlah akhir dari segalanya, melainkan waktu yang berharga untuk tetap hidup sehat,
-                            aktif, dan penuh sukacita. Melalui pendekatan pelayanan yang menyeluruh—mencakup kesehatan, rohani, dan
-                            rekreasi—kami menciptakan lingkungan yang aman, nyaman, dan membangun, sesuai dengan visi kami dalam mewujudkan
-                            kehidupan yang berkualitas bagi para lansia.
+                            {{ $settings['visi'] ?? '"Kasih Kristus Untuk Semua" menjadi semangat kami dalam melayani dan mendampingi para lanjut usia menjalani hari tua yang penuh makna, kedamaian, dan kebahagiaan.' }}
                         </p>
                     </div>
                 </div>
@@ -143,9 +136,7 @@
             <section class="about py-5">
                 <div class="container">
                     <div class="info-box info-box-berlogo">
-                        <p class="about-quote"> "Dengan Kasih Kristus Sebagai Dasar Pelayanan Kami mendorong keluarga, masyarakat, dan
-                            semua pihak untuk bersama-sama menciptakan masa tua yang penuh cinta, sejahtera, dan bermartabat bagi para lansia.
-                            Panti Wredha Budi Dharma Kasih bukan hanya tempat tinggal—ini adalah rumah kami."
+                        <p class="about-quote">{{ $settings['misi'] ?? '"Dengan Kasih Kristus Sebagai Dasar Pelayanan Kami mendorong keluarga, masyarakat, dan semua pihak untuk bersama-sama menciptakan masa tua yang penuh cinta, sejahtera, dan bermartabat bagi para lansia. Panti Wredha Budi Dharma Kasih bukan hanya tempat tinggal—ini adalah rumah kami."' }}
                         </p>
                     </div>
                 </div>
@@ -159,42 +150,20 @@
                     </div>
 
                     <div class="row g-4">
-                        <div class="col-lg-4 col-md-6">
-                            <div class="paviliun-item">
-                                <img src="{{ asset('assets/images/pav1.jpg') }}" class="card-img-top" alt="Paviliun Bougenville 1">
-                                <p>PAVILIUN BOUGENVILLE 1</p>
+                        @forelse($pavilions as $pavilion)
+                            <div class="col-lg-4 col-md-6">
+                                <div class="paviliun-item">
+                                    @if($pavilion->image)
+                                        <img src="{{ asset('storage/' . $pavilion->image) }}" class="card-img-top" alt="{{ $pavilion->name }}">
+                                    @else
+                                        <img src="{{ asset('assets/images/pav1.jpg') }}" class="card-img-top" alt="{{ $pavilion->name }}">
+                                    @endif
+                                    <p>{{ strtoupper($pavilion->name) }}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="paviliun-item">
-                                <img src="{{ asset('assets/images/pav4.png') }}" class="card-img-top" alt="Paviliun Bougenville 2">
-                                <p>PAVILIUN BOUGENVILLE 2</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="paviliun-item">
-                                <img src="{{ asset('assets/images/pav3.png') }}" class="card-img-top" alt="Paviliun Bougenville 3">
-                                <p>PAVILIUN BOUGENVILLE 3</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="paviliun-item">
-                                <img src="{{ asset('assets/images/pav4.png') }}" class="card-img-top" alt="Paviliun Bougenville 4">
-                                <p>PAVILIUN BOUGENVILLE 4</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="paviliun-item">
-                                <img src="{{ asset('assets/images/pav1.jpg') }}" class="card-img-top" alt="Paviliun Bougenville 5">
-                                <p>PAVILIUN BOUGENVILLE 5</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="paviliun-item">
-                                <img src="{{ asset('assets/images/pav3.png') }}" class="card-img-top" alt="Paviliun Bougenville 6">
-                                <p>PAVILIUN BOUGENVILLE 6</p>
-                            </div>
-                        </div>
+                        @empty
+                            <div class="col-12 text-center text-muted">Belum ada fasilitas/paviliun.</div>
+                        @endforelse
                     </div>
                 </div>
             </section>
@@ -210,8 +179,17 @@
                             Untuk informasi lebih lanjut, silahkan menghubungi kami:
                         </p>
                         <div class="contact-info">
-                            <a href="tel:0281891829"><i class="fas fa-phone"></i> (0281) 891-829</a>
-                            <a href="https://wa.me/6281394661664" target="_blank"><i class="fab fa-whatsapp"></i> whatsapp 0813-9466-1664</a>
+                            @if(isset($settings['telepon']))
+                                <a href="tel:{{ $settings['telepon'] }}"><i class="fas fa-phone"></i> {{ $settings['telepon'] }}</a>
+                            @endif
+                            @if(isset($settings['email']))
+                                <a href="mailto:{{ $settings['email'] }}"><i class="fas fa-envelope"></i> {{ $settings['email'] }}</a>
+                            @endif
+                            @if(isset($settings['alamat']))
+                                <a href="https://share.google/s2MmzsEeRxtT1BgNj" target="_blank" class="d-block text-white mt-2" style="text-decoration: none;">
+                                    <i class="fas fa-map-marker-alt"></i> {{ $settings['alamat'] }}
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -220,6 +198,11 @@
 @endsection
 
 @push('scripts')
+<script>
+    window.galleryData = @json($galleries->map(function($g) {
+        return ['src' => asset('storage/' . $g->image), 'alt' => $g->caption ?? 'Dokumentasi Kegiatan'];
+    }));
+</script>
 <script src="{{ asset('assets/js/homepage-vue.js') }}"></script>
 @endpush
 

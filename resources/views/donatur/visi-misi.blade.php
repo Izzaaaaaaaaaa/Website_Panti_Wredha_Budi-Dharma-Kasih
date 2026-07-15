@@ -13,7 +13,7 @@
                 <div class="mb-5 w-100">
                     <h2 class="vm-title">MOTTO</h2>
                     <hr class="vm-divider">
-                    <p class="vm-text">"Kasih Kristus Untuk Semuanya"</p>
+                    <p class="vm-text">{{ $settings['motto'] ?? '"Kasih Kristus Untuk Semuanya"' }}</p>
                 </div>
 
                 {{-- VISI --}}
@@ -21,9 +21,7 @@
                     <h2 class="vm-title">VISI</h2>
                     <hr class="vm-divider">
                     <p class="vm-text">
-                        "Menjadi suatu Yayasan Kristen yang memberikan Pelayanan Kasih
-                        kepada sesama manusia, terutama kepada kaum tua agar mereka
-                        dapat mencapai kehidupan yang berkualitas."
+                        {!! nl2br(e($settings['visi'] ?? '"Menjadi suatu Yayasan Kristen yang memberikan Pelayanan Kasih kepada sesama manusia, terutama kepada kaum tua agar mereka dapat mencapai kehidupan yang berkualitas."')) !!}
                     </p>
                 </div>
 
@@ -32,23 +30,8 @@
                     <h2 class="vm-title">MISI</h2>
                     <hr class="vm-divider">
 
-                    <div class="d-inline-block text-start" style="max-width: 900px;">
-                        <ol class="vm-list">
-                            <li>
-                                Memberi pelayanan Panti kepada orang tua agar mereka
-                                menikmati hidup di usia senja dengan bahagia.
-                            </li>
-                            <li>
-                                Memberikan pelayanan kesehatan, pelayanan rohani,
-                                dan pelayanan rekreasi agar penghuni menikmati hidup
-                                sehat sesuai usia.
-                            </li>
-                            <li>
-                                Memberikan pelayanan lainnya yang menunjukkan kasih
-                                Kristus tanpa bertentangan dengan peraturan
-                                perundang-undangan.
-                            </li>
-                        </ol>
+                    <div class="d-inline-block text-start" style="max-width: 900px; font-size: 1.1rem;">
+                        {!! nl2br(e($settings['misi'] ?? "1. Memberi pelayanan Panti kepada orang tua agar mereka menikmati hidup di usia senja dengan bahagia.\n2. Memberikan pelayanan kesehatan, pelayanan rohani, dan pelayanan rekreasi agar penghuni menikmati hidup sehat sesuai usia.\n3. Memberikan pelayanan lainnya yang menunjukkan kasih Kristus tanpa bertentangan dengan peraturan perundang-undangan.")) !!}
                     </div>
                 </div>
 

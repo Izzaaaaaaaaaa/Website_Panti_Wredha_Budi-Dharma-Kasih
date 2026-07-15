@@ -7,10 +7,17 @@
 
     {{-- HERO IMAGE --}}
     <div class="hero-image-requirements">
-        <img src="{{ asset('assets/images/persyaratan.png') }}"
-             alt="Header Persyaratan"
-             class="w-100 h-auto"
-             style="object-fit: cover;">
+        @if(isset($settings['persyaratan_image']))
+            <img src="{{ asset('storage/' . $settings['persyaratan_image']) }}"
+                 alt="Header Persyaratan"
+                 class="w-100 h-auto"
+                 style="object-fit: cover; max-height: 400px;">
+        @else
+            <img src="{{ asset('assets/images/persyaratan.png') }}"
+                 alt="Header Persyaratan"
+                 class="w-100 h-auto"
+                 style="object-fit: cover;">
+        @endif
     </div>
 
     {{-- CONTENT --}}
@@ -22,23 +29,9 @@
                     <div class="content-paper">
                         <h2>Siapa yang dapat menjadi penghuni panti?</h2>
 
-                        <p class="intro-text">
-                            Kami dengan tangan terbuka menyambut para lansia yang ingin bergabung
-                            dan menjadi bagian dari keluarga besar kami. Untuk menjaga kenyamanan
-                            dan keselamatan bersama, ada beberapa syarat yang perlu dipenuhi oleh
-                            calon penghuni:
-                        </p>
-
-                        <ol class="requirements-list">
-                            <li>Berusia 60 tahun ke atas.</li>
-                            <li>Tidak mengidap gangguan kejiwaan, pikun berat, atau penyakit menular.</li>
-                            <li>Melampirkan hasil tes kesehatan dari dokter, radiolog, atau laboratorium medis.</li>
-                            <li>Mandiri secara fisik dan mampu melakukan aktivitas sehari-hari.</li>
-                            <li>Memiliki sponsor atau penanggung jawab dari pihak keluarga.</li>
-                            <li>Sponsor bersedia menanggung biaya dan rutin menjenguk calon penghuni.</li>
-                            <li>Sponsor wajib menandatangani Surat Pernyataan Tanggung Jawab.</li>
-                            <li>Ketentuan lainnya dapat dirundingkan bersama pengelola panti.</li>
-                        </ol>
+                        <div class="intro-text">
+                            {!! nl2br(e($settings['persyaratan'] ?? "Kami dengan tangan terbuka menyambut para lansia yang ingin bergabung...\n\n1. Berusia 60 tahun ke atas.\n2. Tidak mengidap gangguan kejiwaan...")) !!}
+                        </div>
                     </div>
 
                 </div>

@@ -27,8 +27,11 @@
                             <i class="fas fa-location-dot"></i>
                         </div>
                         <h4>Kunjungi kami</h4>
-                        <p>Jl. Raya Mayjen Sungkono No.510</p>
-                        <p>Kalimanah Wetan, Purbalingga</p>
+                        <p>
+                            <a href="https://share.google/s2MmzsEeRxtT1BgNj" target="_blank" style="text-decoration: none; color: inherit;">
+                                {!! nl2br(e($settings['alamat'] ?? "Jl. Raya Mayjen Sungkono No.510\nKalimanah Wetan, Purbalingga")) !!}
+                            </a>
+                        </p>
                         <div class="info-divider"></div>
                     </div>
 
@@ -37,8 +40,16 @@
                             <i class="fas fa-phone-volume"></i>
                         </div>
                         <h4>Hubungi kami</h4>
-                        <p>(0281) 891 829</p>
-                        <p>+62 813-9466-1664</p>
+                        @if(isset($settings['telepon']))
+                            <p>{{ $settings['telepon'] }}</p>
+                        @endif
+                        @if(isset($settings['email']))
+                            <p>{{ $settings['email'] }}</p>
+                        @endif
+                        @if(!isset($settings['telepon']) && !isset($settings['email']))
+                            <p>(0281) 891 829</p>
+                            <p>+62 813-9466-1664</p>
+                        @endif
                         <div class="info-divider"></div>
                     </div>
 

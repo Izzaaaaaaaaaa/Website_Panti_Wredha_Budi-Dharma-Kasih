@@ -16,16 +16,16 @@ document.addEventListener('DOMContentLoaded', function() {
             return {
                 currentPage: 1,
                 itemsPerPage: 6,
-                galleryImages: [
-                    { src: '/assets/images/7.png', alt: 'Dokumentasi 1' },
-                    { src: '/assets/images/8.png', alt: 'Dokumentasi 2' },
-                    { src: '/assets/images/9.png', alt: 'Dokumentasi 3' },
-                    { src: '/assets/images/7.png', alt: 'Dokumentasi 4' },
-                    { src: '/assets/images/8.png', alt: 'Dokumentasi 5' },
-                    { src: '/assets/images/9.png', alt: 'Dokumentasi 6' },
-                    { src: '/assets/images/7.png', alt: 'Dokumentasi 7' },
-                    { src: '/assets/images/8.png', alt: 'Dokumentasi 8' },
-                ]
+                galleryImages: window.galleryData && window.galleryData.length > 0 
+                    ? window.galleryData 
+                    : [
+                        { src: '/assets/images/7.png', alt: 'Dokumentasi 1' },
+                        { src: '/assets/images/8.png', alt: 'Dokumentasi 2' },
+                        { src: '/assets/images/9.png', alt: 'Dokumentasi 3' },
+                        { src: '/assets/images/7.png', alt: 'Dokumentasi 4' },
+                        { src: '/assets/images/8.png', alt: 'Dokumentasi 5' },
+                        { src: '/assets/images/9.png', alt: 'Dokumentasi 6' }
+                    ]
             };
         },
 

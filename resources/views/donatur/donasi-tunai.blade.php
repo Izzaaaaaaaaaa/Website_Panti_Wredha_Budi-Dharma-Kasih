@@ -8,7 +8,7 @@
     {{-- PAGE HEADER --}}
     <section class="page-header py-5 text-center">
         <div class="container">
-            <h1 class="main-title">Formulir Donasi Tunai</h1>
+            <h1 class="main-title">{{ $settings['donasi_tunai_title'] ?? 'Formulir Donasi Tunai' }}</h1>
         </div>
     </section>
 

@@ -19,31 +19,19 @@
             <div class="row justify-content-center">
                 <div class="col-lg-10">
 
-                    <img src="{{ asset('assets/images/gedung panti.png') }}"
-                         alt="Gedung Panti Budi Dharma Kasih"
-                         class="img-fluid rounded shadow w-100 mb-5">
+                    @if(isset($settings['sejarah_image']))
+                        <img src="{{ asset('storage/' . $settings['sejarah_image']) }}"
+                             alt="Gedung Panti Budi Dharma Kasih"
+                             class="img-fluid rounded shadow w-100 mb-5">
+                    @else
+                        <img src="{{ asset('assets/images/gedung panti.png') }}"
+                             alt="Gedung Panti Budi Dharma Kasih"
+                             class="img-fluid rounded shadow w-100 mb-5">
+                    @endif
 
                     <div class="history-text">
-                                <p>
-                                    Sejarah yayasan ini dimulai pada tahun 1972 ketika Bapak Lie Hok Tjan (Budi Soedarma) memiliki visi mulia untuk mendirikan sebuah Panti Wredha. Beliau tidak hanya mencetuskan ide ini, tetapi juga menunjukkan keseriusannya dengan bersedia menghibahkan sebagian tanah miliknya yang berlokasi di Kalimanah, Purbalingga. Tanah ini dipersiapkan secara khusus untuk mewujudkan impiannya tersebut.
-                                </p>
-                                
-                                <p>
-                                    Bertahun-tahun kemudian, tepatnya pada tanggal 2 Desember 1988, sebuah langkah penting kembali terukir dalam sejarah yayasan. Pada tanggal ini, Yayasan Pelayanan Kristen 'Budi Dharma Kasih' secara resmi didirikan. Pemilihan nama 'Budi Dharma' bukanlah tanpa alasan. Nama ini dipilih sebagai bentuk penghormatan yang mendalam kepada Bapak Lie Hok Tjan, yang telah memberikan kontribusi awal dan menjadi inspirasi utama bagi terbentuknya yayasan ini. Beliau dianggap sebagai sosok yang telah membuka jalan dan memberikan landasan bagi berdirinya yayasan.
-                                </p>
-                                
-                                <p>
-                                    Tidak berselang lama, pada tanggal 24 Desember 1988, Ibu Lie Hok Tjan turut berperan aktif dalam mewujudkan cita-cita luhur sang suami. Beliau merealisasikan keinginan Bapak Lie Hok Tjan dengan menghibahkan sebagian tanah milik mereka secara khusus untuk pembangunan Panti Wredha. Tindakan ini menunjukkan komitmen keluarga dalam mewujudkan pelayanan bagi para lansia.
-                                </p>
-                                
-                                <p>
-                                    Memasuki tahun 1989, tepatnya pada bulan Februari, yayasan ini mendapatkan dukungan yang sangat berarti dari tiga wanita yang kemudian dikenal sebagai pendiri dan penyandang dana utama. Ketiga wanita tersebut adalah Ibu Ny Liek Ny Eling, dan Ny Tiang. Mereka tidak hanya memberikan dukungan finansial, tetapi juga berperan aktif dalam memikul pembangunan fisik Panti Wredha. Kerja keras dan dedikasi mereka membuahkan hasil dengan selesainya unit pertama Panti Wredha pada tanggal 23 September 1989.
-                                </p>
-                                
-                                <p>
-                                    Hingga saat ini, setelah lebih dari tiga puluh tahun sejak awal mula pendiriannya, semangat pelayanan yayasan ini terus berkobar. Pengelolaan yayasan kini berada di tangan generasi berikutnya, yaitu anak dan menantu dari para pendiri, yang dengan setia melanjutkan visi dan misi mulia yang telah diletakkan sejak awal.
-                                </p>
-                            </div>
+                        {!! nl2br(e($settings['sejarah'] ?? 'Sejarah yayasan ini dimulai pada tahun 1972...')) !!}
+                    </div>
 
                 </div>
             </div>

@@ -97,6 +97,37 @@
                 </li>
             </ul>
         </li>
+        {{-- Manajemen Konten (CMS) --}}
+        <li>
+            <a href="#cmsSub" 
+               data-bs-toggle="collapse" 
+               class="dropdown-toggle"
+               :aria-expanded="activePage === 'cms' ? 'true' : 'false'">
+                <i class="fas fa-desktop"></i> Manajemen Konten (CMS)
+            </a>
+            <ul class="list-unstyled sidebar-submenu" 
+                id="cmsSub"
+                :class="{ show: activePage === 'cms', collapse: true }">
+                <li>
+                    <a href="{{ route('admin.pengaturan.index') }}"
+                       :class="{ active: currentUrl.includes('pengaturan') }">
+                        <i class="fas fa-cog"></i> Pengaturan Website
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.paviliun.index') }}"
+                       :class="{ active: currentUrl.includes('paviliun') }">
+                        <i class="fas fa-building"></i> Paviliun & Fasilitas
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.galeri.index') }}"
+                       :class="{ active: currentUrl.includes('galeri') }">
+                        <i class="fas fa-images"></i> Dokumentasi Kegiatan
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul>
     
     {{-- Logout Button --}}

@@ -8,7 +8,10 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 Route::get('/', function () {
-    return view('index');
+    $settings = \App\Models\Setting::pluck('value', 'key');
+    $pavilions = \App\Models\Pavilion::take(6)->get(); // Get up to 6 pavilions for homepage
+    $galleries = \App\Models\Gallery::latest()->get(); // Get all galleries
+    return view('index', compact('settings', 'pavilions', 'galleries'));
 })->name('home');
 
 
@@ -53,11 +56,30 @@ Route::prefix('auth')->group(function () {
 */
 Route::prefix('donatur')->group(function () {
 
-    Route::get('/sejarah', fn () => view('donatur.sejarah'))->name('donatur.sejarah');
-    Route::get('/visi-misi', fn () => view('donatur.visi-misi'))->name('donatur.visi-misi');
-    Route::get('/fasilitas', fn () => view('donatur.fasilitas'))->name('donatur.fasilitas');
-    Route::get('/persyaratan', fn () => view('donatur.persyaratan'))->name('donatur.persyaratan');
-    Route::get('/kontak', fn () => view('donatur.kontak'))->name('donatur.kontak');
+    Route::get('/sejarah', function () {
+        $settings = \App\Models\Setting::pluck('value', 'key');
+        return view('donatur.sejarah', compact('settings'));
+    })->name('donatur.sejarah');
+    
+    Route::get('/visi-misi', function () {
+        $settings = \App\Models\Setting::pluck('value', 'key');
+        return view('donatur.visi-misi', compact('settings'));
+    })->name('donatur.visi-misi');
+    
+    Route::get('/fasilitas', function () {
+        $pavilions = \App\Models\Pavilion::all();
+        return view('donatur.fasilitas', compact('pavilions'));
+    })->name('donatur.fasilitas');
+    
+    Route::get('/persyaratan', function () {
+        $settings = \App\Models\Setting::pluck('value', 'key');
+        return view('donatur.persyaratan', compact('settings'));
+    })->name('donatur.persyaratan');
+    
+    Route::get('/kontak', function () {
+        $settings = \App\Models\Setting::pluck('value', 'key');
+        return view('donatur.kontak', compact('settings'));
+    })->name('donatur.kontak');
 
 });
 
@@ -69,9 +91,21 @@ Route::prefix('donatur')->group(function () {
 */
 Route::prefix('donatur')->group(function () {
 
-    Route::get('/donasi', fn () => view('donatur.donasi'))->name('donatur.donasi');
-    Route::get('/donasi-tunai', fn () => view('donatur.donasi-tunai'))->name('donatur.donasi-tunai');
-    Route::get('/donasi-barang', fn () => view('donatur.donasi-barang'))->name('donatur.donasi-barang');
+    Route::get('/donasi', function () {
+        $settings = \App\Models\Setting::pluck('value', 'key');
+        return view('donatur.donasi', compact('settings'));
+    })->name('donatur.donasi');
+    
+    Route::get('/donasi-tunai', function () {
+        $settings = \App\Models\Setting::pluck('value', 'key');
+        return view('donatur.donasi-tunai', compact('settings'));
+    })->name('donatur.donasi-tunai');
+    
+    Route::get('/donasi-barang', function () {
+        $settings = \App\Models\Setting::pluck('value', 'key');
+        return view('donatur.donasi-barang', compact('settings'));
+    })->name('donatur.donasi-barang');
+    
     Route::get('/notifikasi', fn () => view('donatur.notifikasi-donatur'))->name('donatur.notifikasi');
 
 });
@@ -105,6 +139,16 @@ Route::prefix('admin')->group(function () {
         Route::get('/semua-feedback', fn () => view('admin.semua-feedback'))->name('admin.semua-feedback');
         Route::get('/semua-aktivitas', fn () => view('admin.semua-aktivitas'))->name('admin.semua-aktivitas');
         Route::get('/notifikasi', fn () => view('admin.notifikasi-admin'))->name('admin.notifikasi');
+        
+        // Pengaturan Website
+        Route::get('/pengaturan', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('admin.pengaturan.index');
+        Route::post('/pengaturan', [\App\Http\Controllers\Admin\SettingController::class, 'update'])->name('admin.pengaturan.update');
+        
+        // Paviliun / Fasilitas
+        Route::resource('paviliun', \App\Http\Controllers\Admin\PavilionController::class)->names('admin.paviliun');
+        
+        // Galeri / Dokumentasi
+        Route::resource('galeri', \App\Http\Controllers\Admin\GalleryController::class)->names('admin.galeri');
     });
 
 });

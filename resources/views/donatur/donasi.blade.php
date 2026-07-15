@@ -7,9 +7,13 @@
 
     {{-- HERO IMAGE --}}
     <section class="text-center p-0">
-        <img src="{{ asset('assets/images/bakti sosial.png') }}"
-             alt="Bakti Sosial Panti Wredha"
-             class="hero-banner-full">
+        @if(isset($settings['donasi_image']))
+            <img src="{{ asset('storage/' . $settings['donasi_image']) }}" alt="Banner Donasi" class="hero-banner-full">
+        @else
+            <img src="{{ asset('assets/images/bakti sosial.png') }}"
+                 alt="Bakti Sosial Panti Wredha"
+                 class="hero-banner-full">
+        @endif
     </section>
 
     {{-- KONTEN DONASI --}}
@@ -21,21 +25,24 @@
                     <div class="donasi-direct-content">
 
                         <p>
-                            Apabila Ibu/Bapak/Saudara/i tergerak untuk memberikan bantuan dan dukungan,
-                            silahkan menghubungi kami (0281) 891-829, Whatsapp: 0813-9466-1664 atau email
-                            Panti “Budi Dharma Kasih” Purbalingga@gmail.com
+                            {!! nl2br(e($settings['donasi_intro'] ?? "Apabila Ibu/Bapak/Saudara/i tergerak untuk memberikan bantuan dan dukungan...\nSilahkan menghubungi kami...")) !!}
                         </p>
 
                         <h3>Ungkapan Kasih / Donasi dapat ditransfer ke rekening:</h3>
 
-                        <ul>
-                            <li>BCA KCP Pondok Indah, No. rekening xxxxxxxxxxx atas nama Yayasan BDK</li>
-                            <li>Mandiri KCP Purbalingga, No. rekening xxxxxxxxxxx atas nama Yayasan BDK</li>
-                        </ul>
+                        <p>
+                            {!! nl2br(e($settings['nomor_rekening'] ?? "BCA KCP Pondok Indah, No. rekening xxxxxxxxxxx atas nama Yayasan BDK\nMandiri KCP Purbalingga, No. rekening xxxxxxxxxxx atas nama Yayasan BDK")) !!}
+                        </p>
+                        
+                        @if(isset($settings['qris_image']))
+                        <div class="my-4">
+                            <h4>Scan QRIS:</h4>
+                            <img src="{{ asset('storage/' . $settings['qris_image']) }}" alt="QRIS" class="img-fluid" style="max-height: 250px;">
+                        </div>
+                        @endif
 
                         <p>
-                            Sekali lagi terima kasih atas semua dukungan dan bersama ini kami sampaikan
-                            salam sukacita dari Oma dan Opa di Panti Wredha Budi Dharma Kasih.
+                            {!! nl2br(e($settings['donasi_closing'] ?? "Sekali lagi terima kasih atas semua dukungan dan bersama ini kami sampaikan\nsalam sukacita dari Oma dan Opa di Panti Wredha Budi Dharma Kasih.")) !!}
                         </p>
 
                         {{-- TOMBOL DONASI (DISAMAIN DENGAN HTML LAMA) --}}
